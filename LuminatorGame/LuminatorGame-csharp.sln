@@ -1,0 +1,45 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{EF3A7460-18EC-BC7A-4D22-CC2B45CE79C9}") = "LuminatorGame", "Assembly-CSharp-firstpass-vs.csproj", "{DC4BFD95-4093-6650-A5AB-BEBE8BF31107}"
+EndProject
+Project("{EF3A7460-18EC-BC7A-4D22-CC2B45CE79C9}") = "LuminatorGame", "Assembly-CSharp-vs.csproj", "{6FB2BF77-5E44-3CA9-2A3F-CB1263465401}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC4BFD95-4093-6650-A5AB-BEBE8BF31107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC4BFD95-4093-6650-A5AB-BEBE8BF31107}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC4BFD95-4093-6650-A5AB-BEBE8BF31107}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC4BFD95-4093-6650-A5AB-BEBE8BF31107}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FB2BF77-5E44-3CA9-2A3F-CB1263465401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FB2BF77-5E44-3CA9-2A3F-CB1263465401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FB2BF77-5E44-3CA9-2A3F-CB1263465401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FB2BF77-5E44-3CA9-2A3F-CB1263465401}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+														GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabWidth = 4
+		$3.EolMarker = Unix
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+	EndGlobalSection
+
+EndGlobal
