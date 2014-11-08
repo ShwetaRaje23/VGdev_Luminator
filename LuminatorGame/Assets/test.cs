@@ -1,1 +1,1 @@
-**This is a test asset file**
+//This is a test asset file**
