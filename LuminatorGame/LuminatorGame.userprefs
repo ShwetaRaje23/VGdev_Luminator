@@ -1,8 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
+<<<<<<< HEAD
   <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\Lab Work\MultiImagePC\Assets\Animate.cs">
     <Files>
       <File FileName="..\..\..\Lab Work\MultiImagePC\Assets\Animate.cs" Line="10" Column="49" />
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\test.cs">
+    <Files>
+      <File FileName="Assets\test.cs" Line="2" Column="1" />
+>>>>>>> 560752e93dd11873bd230201500b4ac2cba17ccd
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
