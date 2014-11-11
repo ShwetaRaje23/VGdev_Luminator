@@ -46,8 +46,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\LifeMeterScript.cs" />
      <Compile Include="Assets\Scripts\PlayerControl.cs" />
      <Compile Include="Assets\Scripts\Rotator.cs" />
+     <Compile Include="Assets\Scripts\ToggleLight.cs" />
      <Compile Include="Assets\Scripts\sinkEffect.cs" />
      <Compile Include="Assets\test.cs" />
      <None Include="Assets\Cartoony Weapon Pack\Readme.txt" />

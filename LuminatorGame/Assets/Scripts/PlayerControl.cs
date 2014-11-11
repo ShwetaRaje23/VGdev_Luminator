@@ -12,14 +12,28 @@ public class PlayerControl : MonoBehaviour {
 	void Update () {
 		
 	}
-	
-	void OnControllerColliderHit(ControllerColliderHit hit) {
-		if (hit.gameObject.tag == "sinkTrigger") {
+	void OnTriggerEnter(Collider other)
+		{
+		Debug.Log(" in trigger Collision");
+		transform.Translate(0,(float)(-0.5 * Time.deltaTime),0);
+		if (other.gameObject.tag == "PickUp") {
 			
-			Debug.Log("Collision");
-			sinkEffect.entertriggersink = true;
-			
+			Debug.Log("trigger Collision");
+
+			transform.Translate(0,(float)(-1* Time.deltaTime),0);
+
 		}
-		
-	}
+		}
+	
+//	void OnControllerColliderHit(ControllerColliderHit hit) {
+//		Debug.Log(" in Collision");
+//
+//		if (hit.gameObject.tag == "PickUp") {
+//			
+//			Debug.Log("Collision");
+//			//sinkEffect.entertriggersink = true;
+//			
+//		}
+//		
+//	}
 }
