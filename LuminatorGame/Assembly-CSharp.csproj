@@ -46,6 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\CollisionCheck.cs" />
+     <Compile Include="Assets\Scripts\GUIManager.cs" />
+     <Compile Include="Assets\Scripts\GameEventManager.cs" />
      <Compile Include="Assets\Scripts\LifeMeterScript.cs" />
      <Compile Include="Assets\Scripts\PlayerControl.cs" />
      <Compile Include="Assets\Scripts\Rotator.cs" />

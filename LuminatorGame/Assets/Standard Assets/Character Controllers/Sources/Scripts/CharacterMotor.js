@@ -218,7 +218,7 @@ private function UpdateFunction () {
 //Debug.Log("function called");
 	var rawInput: float; 
 	inputRotate = Input.GetAxis ("Horizontal");
-	Debug.Log("inputRotate: "+inputRotate);
+	//Debug.Log("inputRotate: "+inputRotate);
 	if(inputRotate>180f)
 				inputRotate-=360.0f;
 	
