@@ -43,7 +43,15 @@ public class MouseLook : MonoBehaviour {
 		}
 		else if (axes == RotationAxes.MouseX)
 		{
-			transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX, 0);
+			//Debug.Log ("MouseX rotation called");
+			float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
+			//float rotationX = Input.GetAxis("Mouse X") * sensitivityX;
+			if(rotationX>180f)
+				rotationX-=360.0f;
+			rotationX = Mathf.Clamp (rotationX, minimumX, maximumX);
+			
+			transform.localEulerAngles = new Vector3(0, rotationX, 0);
+			//transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX, 0);
 		}
 		else
 		{
@@ -57,7 +65,7 @@ public class MouseLook : MonoBehaviour {
 	void Start ()
 	{
 		// Make the rigid body not change rotation
-		if (GetComponent<Rigidbody>())
-			GetComponent<Rigidbody>().freezeRotation = true;
+		//if (GetComponent<Rigidbody>())
+			//GetComponent<Rigidbody>().freezeRotation = true;
 	}
 }

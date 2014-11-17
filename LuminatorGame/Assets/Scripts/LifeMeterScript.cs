@@ -24,7 +24,7 @@ public class LifeMeterScript : MonoBehaviour {
 
 			else if (ToggleLight.lightOn == false)
 			currLife = currLife - (int)Time.deltaTime;
-		Debug.Log ("Life " + currLife);
+		//Debug.Log ("Life " + currLife);
 
 		if ((int)currLife < 10) {
 			//audio.PlayOneShot(timer);
