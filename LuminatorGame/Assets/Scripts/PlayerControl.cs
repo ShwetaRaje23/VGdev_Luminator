@@ -5,8 +5,15 @@ public class PlayerControl : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		
+		GameEventManager.GameOver += GameOver;
 	}
+
+	private void GameOver()
+	{
+		//this.active = false;
+		//GameObject.Find ("Player").transform.position
+	}
+
 	
 	// Update is called once per frame
 	void Update () {

@@ -212,7 +212,9 @@ function Awake () {
 	anim = GameObject.Find("ForBumpyanimation").GetComponent(Animator);
 	audio1 = GetComponent(AudioSource);
 	tr = transform;
+		
 }
+
 
 private function UpdateFunction () {
 //Debug.Log("function called");

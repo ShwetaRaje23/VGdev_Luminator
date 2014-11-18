@@ -17,7 +17,7 @@ public class CollisionCheck : MonoBehaviour {
 		//Destroy(other.gameObject);
 		Debug.Log ("Collision with " + other.name);
 		if (other.name == "ExitZone") {
-			GUIManager.SetGameOver(20);
+			GUIManager.SetGameOver(LifeMeterScript.GetHealth());
 			GameEventManager.TriggerGameOver();
 		}
 	}
