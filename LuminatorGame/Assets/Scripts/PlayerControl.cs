@@ -22,6 +22,12 @@ public class PlayerControl : MonoBehaviour {
 
 			transform.Translate(0,(float)(-1* Time.deltaTime),0);
 
+
+
+			// add sink motion 
+
+
+
 		}
 		}
 	
