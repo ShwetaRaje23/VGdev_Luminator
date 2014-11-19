@@ -5,6 +5,8 @@ Project("{EF3A7460-18EC-BC7A-4D22-CC2B45CE79C9}") = "LuminatorGame", "Assembly-C
 EndProject
 Project("{EF3A7460-18EC-BC7A-4D22-CC2B45CE79C9}") = "LuminatorGame", "Assembly-CSharp-vs.csproj", "{6FB2BF77-5E44-3CA9-2A3F-CB1263465401}"
 EndProject
+Project("{EF3A7460-18EC-BC7A-4D22-CC2B45CE79C9}") = "LuminatorGame", "Assembly-CSharp-Editor-vs.csproj", "{D4358034-A172-B1B5-3851-464E85D9D002}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,14 +21,17 @@ Global
 		{6FB2BF77-5E44-3CA9-2A3F-CB1263465401}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FB2BF77-5E44-3CA9-2A3F-CB1263465401}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FB2BF77-5E44-3CA9-2A3F-CB1263465401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4358034-A172-B1B5-3851-464E85D9D002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4358034-A172-B1B5-3851-464E85D9D002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4358034-A172-B1B5-3851-464E85D9D002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4358034-A172-B1B5-3851-464E85D9D002}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-<<<<<<< HEAD
-																																										GlobalSection(MonoDevelopProperties) = preSolution
+																																																GlobalSection(MonoDevelopProperties) = preSolution
 =======
-																																								GlobalSection(MonoDevelopProperties) = preSolution
+																																							GlobalSection(MonoDevelopProperties) = preSolution
 >>>>>>> origin/master
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0

@@ -3,10 +3,11 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
 	public AudioClip drowning;
+	bool sinkCollided = false;
 	// Use this for initialization
 	void Start () {
 		GameEventManager.GameOver += GameOver;
-<<<<<<< HEAD
+
 	}
 
 	private void GameOver()
@@ -15,50 +16,46 @@ public class PlayerControl : MonoBehaviour {
 		//GameObject.Find ("Player").transform.position
 	}
 
-=======
-	}
-
-	private void GameOver()
-	{
-		//this.active = false;
-		//GameObject.Find ("Player").transform.position
-	}
-
->>>>>>> origin/master
-	
-	// Update is called once per frame
+		// Update is called once per frame
 	void Update () {
 		
 	}
-	void OnTriggerEnter(Collider other)
-		{
 
-
+void OnTriggerEnter(Collider other)
+	{
 		Debug.Log ("Collision with " + other.name);
 		if (other.name == "ExitZone") {
 			GUIManager.SetGameOver(LifeMeterScript.GetHealth());
 			GameEventManager.TriggerGameOver();
 		}
 		
-		if (other.name == "sinkTrigger") {
+		if (other.name == "sinkTrigger" && sinkCollided == false) {
 			GameObject playermotion = GameObject.Find("ForBumpyanimation");
 
 
-			
-			for(int loopVariable = 0 ; loopVariable < 3; loopVariable++)
-			{
-				playermotion.animation.Play("SinkMotion");
-				
+		// sink animation - letting it be here	
+		//	for(int loopVariable = 0 ; loopVariable < 3; loopVariable++)
+		//	{
+			playermotion.animation.Play("testsinkCurve");
 				audio.PlayOneShot(drowning);
-				
-				if (Input.GetKeyDown("s"))
+				sinkCollided = true; // it would not go into any other sink collisions - change later
+			playermotion.animation.CrossFade("Bumpy", 1F); 
+
+			if (Input.GetKeyDown("v"))
 				{
-					playermotion.animation.Stop("SinkMotion");
-					break;
+				playermotion.animation.Stop("testsinkCurve");
+
+					//break;
 				}
-			}
-			
-		}
+		//	}
+
+			//playermotion.transform 
+
+		} // end of detection of collision with sink
+
+
+}
+
 
 
 //		Debug.Log(" in trigger Collision");
@@ -76,7 +73,7 @@ public class PlayerControl : MonoBehaviour {
 
 
 
-		}
+		
 	
 //	void OnControllerColliderHit(ControllerColliderHit hit) {
 //		Debug.Log(" in Collision");
@@ -89,4 +86,5 @@ public class PlayerControl : MonoBehaviour {
 //		}
 //		
 //	}
+
 }
