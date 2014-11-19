@@ -6,6 +6,7 @@ public class PlayerControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GameEventManager.GameOver += GameOver;
+<<<<<<< HEAD
 	}
 
 	private void GameOver()
@@ -14,6 +15,16 @@ public class PlayerControl : MonoBehaviour {
 		//GameObject.Find ("Player").transform.position
 	}
 
+=======
+	}
+
+	private void GameOver()
+	{
+		//this.active = false;
+		//GameObject.Find ("Player").transform.position
+	}
+
+>>>>>>> origin/master
 	
 	// Update is called once per frame
 	void Update () {
