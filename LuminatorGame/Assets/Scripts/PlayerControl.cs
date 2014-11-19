@@ -76,11 +76,11 @@ public class PlayerControl : MonoBehaviour {
 		}
 		if(hitTree){
 			if(blinkTime > 0){
-				var r = Random.Range(80, 100);
-				var g = Random.Range(0, 30);
-				var b = Random.Range(50, 80);
-				headLight1.light.color = new Color(r, g, b, 255);
-				headLight2.light.color = new Color(r, g, b, 255);
+				var r = Random.Range(0.0F, 1.0F);
+				var g = Random.Range(0.0F, 0.3F);
+				var b = Random.Range(0.5F, 0.8F);
+				headLight1.light.color = new Color(r, g, b, 1F);
+				headLight2.light.color = new Color(r, g, b, 1F);
 				blinkTime = blinkTime - 1;
 			}
 			else{
