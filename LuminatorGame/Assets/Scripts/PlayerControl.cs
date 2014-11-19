@@ -26,7 +26,7 @@ public class PlayerControl : MonoBehaviour {
 		headLight2.light.color = new Color(1f, 0.96f, 0.88f, 1f);
 		hitTree = false;
 		hitTreeObject = null;
-		blinkTime = 60;
+		blinkTime = 20;
 		canEnter = true;
 		dropFood = false;
 		foodObjects = new Dictionary<GameObject, bool> ();
@@ -55,7 +55,7 @@ public class PlayerControl : MonoBehaviour {
 		
 		GameObject gg;
 		//Vector3 v;
-		if (dropFood && blinkTime == 60) {
+		if (dropFood && blinkTime == 20) {
 			
 			if(treeFoodCountDone[hitTreeObject] < 2){
 				if(treeFoodCountDone[hitTreeObject] == 0){
@@ -85,7 +85,7 @@ public class PlayerControl : MonoBehaviour {
 			}
 			else{
 				hitTree = false;
-				blinkTime = 60;
+				blinkTime = 20;
 				hitTreeObject = null;
 				headLight1.light.color = new Color(1f, 0.96f, 0.88f, 1f);
 				headLight2.light.color = new Color(1f, 0.96f, 0.88f, 1f);
