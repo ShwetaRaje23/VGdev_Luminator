@@ -69,6 +69,7 @@ public class GUIManager : MonoBehaviour {
 	}
 
 	public static void SetGameOver(int health){
+		//Debug.Log ("Its called");
 		instance.gameOverText.text = "You have won with a health of "+health;
 	}
 

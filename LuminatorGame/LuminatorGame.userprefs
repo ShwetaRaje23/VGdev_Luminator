@@ -1,20 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerControl.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GUIManager.cs">
     <Files>
-<<<<<<< HEAD
-      <File FileName="Assets\Scripts\PlayerControl.cs" Line="35" Column="4" />
-      <File FileName="Assets\Scripts\LifeMeterScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Standard Assets\Character Controllers\Sources\Scripts\CharacterMotor.js" Line="1" Column="1" />
-      <File FileName="Assets\CollisionCheck.cs" Line="8" Column="2" />
-      <File FileName="Assets\Scripts\GUIManager.cs" Line="1" Column="1" />
-=======
-      <File FileName="Assets\Scripts\LifeMeterScript.cs" Line="31" Column="23" />
-      <File FileName="Assets\Scripts\PlayerControl.cs" Line="14" Column="5" />
-      <File FileName="Assets\Standard Assets\Character Controllers\Sources\Scripts\CharacterMotor.js" Line="218" Column="1" />
-      <File FileName="Assets\CollisionCheck.cs" Line="6" Column="3" />
-      <File FileName="Assets\Scripts\GUIManager.cs" Line="16" Column="3" />
->>>>>>> origin/master
+      <File FileName="Assets\Scripts\PlayerControl.cs" Line="176" Column="4" />
+      <File FileName="Assets\CollisionCheck.cs" Line="15" Column="3" />
+      <File FileName="Assets\Scripts\GUIManager.cs" Line="55" Column="3" />
       <File FileName="Assets\Scripts\GameEventManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

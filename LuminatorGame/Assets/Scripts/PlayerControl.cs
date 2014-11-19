@@ -119,6 +119,7 @@ public class PlayerControl : MonoBehaviour {
 		Debug.Log ("Collision with " + other.name);
 		if (other.name == "ExitZone") {
 			GUIManager.SetGameOver(LifeMeterScript.GetHealth());
+
 			GameEventManager.TriggerGameOver();
 		}
 		
