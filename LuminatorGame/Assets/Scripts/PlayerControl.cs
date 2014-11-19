@@ -2,11 +2,18 @@
 using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
-	
+	public AudioClip drowning;
 	// Use this for initialization
 	void Start () {
-		
+		GameEventManager.GameOver += GameOver;
 	}
+
+	private void GameOver()
+	{
+		//this.active = false;
+		//GameObject.Find ("Player").transform.position
+	}
+
 	
 	// Update is called once per frame
 	void Update () {
@@ -14,13 +21,42 @@ public class PlayerControl : MonoBehaviour {
 	}
 	void OnTriggerEnter(Collider other)
 		{
-		Debug.Log(" in trigger Collision");
-		transform.Translate(0,(float)(-0.5 * Time.deltaTime),0);
-		if (other.gameObject.tag == "PickUp") {
-			
-			Debug.Log("trigger Collision");
 
-			transform.Translate(0,(float)(-1* Time.deltaTime),0);
+
+		Debug.Log ("Collision with " + other.name);
+		if (other.name == "ExitZone") {
+			GUIManager.SetGameOver(LifeMeterScript.GetHealth());
+			GameEventManager.TriggerGameOver();
+		}
+		
+		if (other.name == "sinkTrigger") {
+			GameObject playermotion = GameObject.Find("ForBumpyanimation");
+
+
+			
+			for(int loopVariable = 0 ; loopVariable < 3; loopVariable++)
+			{
+				playermotion.animation.Play("SinkMotion");
+				
+				audio.PlayOneShot(drowning);
+				
+				if (Input.GetKeyDown("s"))
+				{
+					playermotion.animation.Stop("SinkMotion");
+					break;
+				}
+			}
+			
+		}
+
+
+//		Debug.Log(" in trigger Collision");
+//		transform.Translate(0,(float)(-0.5 * Time.deltaTime),0);
+//		if (other.gameObject.tag == "PickUp") {
+//			
+//			Debug.Log("trigger Collision");
+//
+//		//	transform.Translate(0,(float)(-1* Time.deltaTime),0);
 
 
 
@@ -28,7 +64,7 @@ public class PlayerControl : MonoBehaviour {
 
 
 
-		}
+
 		}
 	
 //	void OnControllerColliderHit(ControllerColliderHit hit) {

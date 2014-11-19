@@ -4,6 +4,8 @@ using System.Collections;
 public class CollisionCheck : MonoBehaviour {
 
 	// Use this for initialization
+
+	public AudioClip drowning;
 	void Start () {
 
 	}
@@ -17,8 +19,27 @@ public class CollisionCheck : MonoBehaviour {
 		//Destroy(other.gameObject);
 		Debug.Log ("Collision with " + other.name);
 		if (other.name == "ExitZone") {
-			GUIManager.SetGameOver(20);
+			GUIManager.SetGameOver(LifeMeterScript.GetHealth());
 			GameEventManager.TriggerGameOver();
 		}
+
+		if (other.name == "sinkTrigger") {
+			GameObject playermotion = GameObject.Find("ForBumpyanimation");
+		
+			for(int loopVariable = 0 ; loopVariable < 3; loopVariable++)
+			{
+				playermotion.animation.Play("SinkMotion");
+
+				audio.PlayOneShot(drowning);
+
+				if (Input.GetKeyDown("s"))
+				{
+					playermotion.animation.Stop("SinkMotion");
+					break;
+				}
+			}
+			
+			}
+
 	}
 }
