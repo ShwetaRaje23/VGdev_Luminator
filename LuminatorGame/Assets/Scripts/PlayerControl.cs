@@ -95,21 +95,21 @@ public class PlayerControl : MonoBehaviour {
 		
 		var buffer = new List<GameObject> (foodObjects.Keys);
 		foreach(var key in buffer){
-			if(key.transform.position.y < 3 && foodObjects[key] == false){
+			if(key.transform.position.y < 39 && foodObjects[key] == false){
 				foodObjects[key] = true;
 				key.AddComponent("SphereCollider");
 			}
 		}
 	}
 	void OnControllerColliderHit(ControllerColliderHit hit){
-		print ("Collided with " + hit.gameObject.tag);
 		if(canEnter && hit.gameObject.tag == "Tree"){
+			print ("Collided with " + hit.gameObject.tag);
 			canEnter = false;
 			hitTree = true;
 			hitTreeObject = hit.gameObject;
 			dropFood = true;
 			treeHitPos =  hit.gameObject.transform.position;
-			treeHitPos.y = 7;
+			treeHitPos.y = 45;
 		}
 	}
 	void OnTriggerEnter(Collider other)
