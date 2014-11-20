@@ -70,7 +70,12 @@ public class GUIManager : MonoBehaviour {
 
 	public static void SetGameOver(int health){
 		//Debug.Log ("Its called");
+		if(health > 1)
 		instance.gameOverText.text = "You have won with a health of "+health;
+		else
+		instance.gameOverText.text = "You starved to death. Play again ";
+	
 	}
+
 
 }

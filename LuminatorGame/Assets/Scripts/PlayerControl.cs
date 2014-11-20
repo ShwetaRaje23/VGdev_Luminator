@@ -158,6 +158,17 @@ public class PlayerControl : MonoBehaviour {
 		}
 		
 		if (other.name == "sinkTrigger") {
+
+
+			//trying out PlayerPrefs restriction
+			Vector3 pos = transform.position;
+			pos.z = -15;
+			pos.x =39;
+			transform.position = new Vector3(pos.x, transform.position.y, pos.z );
+			//transform.position.z = pos.z;
+
+
+			transform.position = pos;
 			anim.SetBool("sink",true);
 			audio.PlayOneShot(drowning);
 			s_count = 0;

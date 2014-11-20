@@ -55,24 +55,13 @@ public class LifeMeterScript : MonoBehaviour {
 			currLife = currLife - (int)Time.deltaTime;
 		//Debug.Log ("Life " + currLife);
 		
-		if ((int)currLife < 10) {
-			//audio.PlayOneShot(timer);
-			
-		} else if ((int)currLife < 1) {
+		 if ((int)currLife < 1) {
 			
 			//Stop Game !
-			//ToggleLight.light.enabled = false;
-			
-			//gameOverText.text = "You are dead !!"; 
-			
-			//			gameText.text = "You are dead !! ";
-			//			StartCoroutine(GUIManager.FadeInstructions(gameText));
-			//			currLife = 0;
-			//			GameEventManager.TriggerGameOver();	
-			// Kill Charcter	
-			
+			GUIManager.SetGameOver(LifeMeterScript.GetHealth());
+			GameEventManager.TriggerGameOver();
 		}
-		}
+	}
 
 	void OnGUI()
 	{
