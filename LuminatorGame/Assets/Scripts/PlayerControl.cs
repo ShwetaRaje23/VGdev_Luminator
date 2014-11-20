@@ -20,7 +20,8 @@ public class PlayerControl : MonoBehaviour {
 	bool canEnter;
 	GameObject hitTreeObject;
 	int foodObjectHitCount;
-
+	private Animator anim;
+	private int s_count;
 
 	// Use this for initialization
 	void Start () {
@@ -41,7 +42,8 @@ public class PlayerControl : MonoBehaviour {
 		}
 		foodObjectHitCount = 0;
 		GameEventManager.GameOver += GameOver;
-
+		anim = GameObject.Find ("ForBumpyanimation").GetComponent<Animator> ();
+		s_count = 0;
 	}
 
 	private void GameOver()
@@ -120,6 +122,12 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 		print ("Food Object hit count " + foodObjectHitCount);
+
+		if (Input.GetKey (KeyCode.Space))
+						s_count++;
+		if (s_count > 10)
+						anim.SetBool ("sink", false);
+
 	}
 	void OnControllerColliderHit(ControllerColliderHit hit){
 		if(canEnter && hit.gameObject.tag == "Tree"){
@@ -150,22 +158,25 @@ public class PlayerControl : MonoBehaviour {
 		}
 		
 		if (other.name == "sinkTrigger") {
-			GameObject playermotion = GameObject.Find("ForBumpyanimation");
-
-
-			
-			for(int loopVariable = 0 ; loopVariable < 3; loopVariable++)
-			{
-				playermotion.animation.Play("SinkMotion");
-				
-				audio.PlayOneShot(drowning);
-				
-				if (Input.GetKeyDown("s"))
-				{
-					playermotion.animation.Stop("SinkMotion");
-					break;
-				}
-			}
+			anim.SetBool("sink",true);
+			audio.PlayOneShot(drowning);
+			s_count = 0;
+//			GameObject playermotion = GameObject.Find("ForBumpyanimation");
+//
+//
+//			
+//			for(int loopVariable = 0 ; loopVariable < 3; loopVariable++)
+//			{
+//				playermotion.animation.Play("SinkMotion");
+//				
+//				audio.PlayOneShot(drowning);
+//				
+//				if (Input.GetKeyDown("s"))
+//				{
+//					playermotion.animation.Stop("SinkMotion");
+//					break;
+//				}
+//			}
 			
 		}
 
