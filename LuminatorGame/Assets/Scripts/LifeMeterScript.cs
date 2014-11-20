@@ -8,6 +8,7 @@ public class LifeMeterScript : MonoBehaviour {
 	public int maxLife = 100;
 	public float currLife = 100f;
 
+	private int numFoodItemsPicked;
 	private bool gameOver = false;
 	//public AudioClip timer;
 	//public GUIText gameText;
@@ -17,6 +18,7 @@ public class LifeMeterScript : MonoBehaviour {
 	void Start () {
 		instance = this;
 		GameEventManager.GameOver += GameOver;
+		numFoodItemsPicked = 0;
 	}
 
 	void GameOver()
@@ -34,6 +36,17 @@ public class LifeMeterScript : MonoBehaviour {
 
 	void UpdateHealth()
 	{
+		GameObject g = GameObject.Find ("Player");
+		PlayerControl otherScript = g.GetComponent<PlayerControl>();
+		int currentNumFoodItemsPicked;
+
+		currentNumFoodItemsPicked = otherScript.getNumFoodItemsPicked();
+
+		if (currentNumFoodItemsPicked > numFoodItemsPicked) {
+			currLife = Mathf.Min (currLife + (currentNumFoodItemsPicked - numFoodItemsPicked) * 5, maxLife);
+			numFoodItemsPicked = currentNumFoodItemsPicked;
+		}
+
 		if (ToggleLight.lightOn == true) {
 			currLife -= Time.deltaTime;
 		}

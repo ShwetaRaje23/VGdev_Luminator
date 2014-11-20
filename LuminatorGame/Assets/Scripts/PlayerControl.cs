@@ -6,16 +6,20 @@ public class PlayerControl : MonoBehaviour {
 	public AudioClip drowning;
 	public GameObject foodPrefab1;
 	public GameObject foodPrefab2;
+	public GameObject foodPrefab3;
+	public GameObject foodPrefab4;
+	public GameObject foodPrefab5;
 	
 	Dictionary<GameObject, bool>foodObjects;
-	Dictionary<GameObject, int>treeFoodCountDone;
+	Dictionary<GameObject, int>treeFoodItemsDone;
 	GameObject headLight1, headLight2;
 	bool hitTree;
 	int blinkTime;
 	bool dropFood;
-	Vector3 treeHitPos;
+	Vector3 foodFallStartPos;
 	bool canEnter;
 	GameObject hitTreeObject;
+	int foodObjectHitCount;
 
 
 	// Use this for initialization
@@ -31,11 +35,11 @@ public class PlayerControl : MonoBehaviour {
 		dropFood = false;
 		foodObjects = new Dictionary<GameObject, bool> ();
 		GameObject[] trees = GameObject.FindGameObjectsWithTag ("Tree");
-		treeFoodCountDone = new Dictionary<GameObject,int> ();
+		treeFoodItemsDone = new Dictionary<GameObject,int> ();
 		foreach (var key in trees) {
-			treeFoodCountDone [key] = 0;
+			treeFoodItemsDone [key] = 0;
 		}
-
+		foodObjectHitCount = 0;
 		GameEventManager.GameOver += GameOver;
 
 	}
@@ -46,31 +50,46 @@ public class PlayerControl : MonoBehaviour {
 		//GameObject.Find ("Player").transform.position
 	}
 	
+
+	public int getNumFoodItemsPicked(){
+		return foodObjectHitCount;
+	}
+
 	// Update is called once per frame
-	void Update () {
-		Color h1 = headLight1.light.color;
-		Color h2 = headLight2.light.color;
-		//print ("headlight1" + h1.r + "," + h1.g + "," + h1.b + "," + h1.a);
-		//print ("headlight2" + h2.r + "," + h2.g + "," + h2.b + "," + h2.a);
-		
+	void FixedUpdate () {
+
 		GameObject gg;
-		//Vector3 v;
 		if (dropFood && blinkTime == 20) {
 			
-			if(treeFoodCountDone[hitTreeObject] < 2){
-				if(treeFoodCountDone[hitTreeObject] == 0){
-					treeHitPos.x += 5;
-					gg = Instantiate (foodPrefab1, treeHitPos,Quaternion.Euler (0,0,0)) as GameObject;
+			if(treeFoodItemsDone[hitTreeObject] < 5){
+				foodFallStartPos = gameObject.transform.position;
+				foodFallStartPos.y = 45;
+				if(treeFoodItemsDone[hitTreeObject] == 0){
+					foodFallStartPos.x += 5;
+					gg = Instantiate (foodPrefab1, foodFallStartPos,Quaternion.Euler (0,0,0)) as GameObject;
+				}
+				else if(treeFoodItemsDone[hitTreeObject] == 1){
+					foodFallStartPos.x -= 5;
+					gg = Instantiate (foodPrefab2, foodFallStartPos,Quaternion.Euler (0,0,0)) as GameObject;
+				}
+				else if(treeFoodItemsDone[hitTreeObject] == 2){
+					foodFallStartPos.x += 4;
+					gg = Instantiate (foodPrefab3, foodFallStartPos,Quaternion.Euler (0,0,0)) as GameObject;
+				}
+				else if(treeFoodItemsDone[hitTreeObject] == 3){
+					foodFallStartPos.x -= 4;
+					gg = Instantiate (foodPrefab4, foodFallStartPos,Quaternion.Euler (0,0,0)) as GameObject;
 				}
 				else{
-					treeHitPos.x -= 5;
-					gg = Instantiate (foodPrefab2, treeHitPos,Quaternion.Euler (0,0,0)) as GameObject;
+					foodFallStartPos.x += 3;
+					gg = Instantiate (foodPrefab5, foodFallStartPos,Quaternion.Euler (0,0,0)) as GameObject;
 				}
-				
+
+				gg.gameObject.tag = "foodObject";
 				gg.rigidbody.AddForce(new Vector3(5, -10, 5));
 				gg.collider.enabled = false;
 				foodObjects[gg] = false;
-				treeFoodCountDone[hitTreeObject] = treeFoodCountDone[hitTreeObject] + 1;
+				treeFoodItemsDone[hitTreeObject] = treeFoodItemsDone[hitTreeObject] + 1;
 			}
 			dropFood = false;
 		}
@@ -100,6 +119,7 @@ public class PlayerControl : MonoBehaviour {
 				key.AddComponent("SphereCollider");
 			}
 		}
+		print ("Food Object hit count " + foodObjectHitCount);
 	}
 	void OnControllerColliderHit(ControllerColliderHit hit){
 		if(canEnter && hit.gameObject.tag == "Tree"){
@@ -108,8 +128,14 @@ public class PlayerControl : MonoBehaviour {
 			hitTree = true;
 			hitTreeObject = hit.gameObject;
 			dropFood = true;
-			treeHitPos =  hit.gameObject.transform.position;
-			treeHitPos.y = 45;
+		}
+
+		if (hit.gameObject.tag == "foodObject") {
+			foodObjectHitCount++;
+			if(foodObjects.ContainsKey(hit.gameObject)){
+				foodObjects.Remove(hit.gameObject);
+			}
+			Destroy (hit.gameObject);
 		}
 	}
 	void OnTriggerEnter(Collider other)
