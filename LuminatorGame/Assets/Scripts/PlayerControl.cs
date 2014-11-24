@@ -9,6 +9,8 @@ public class PlayerControl : MonoBehaviour {
 	public GameObject foodPrefab3;
 	public GameObject foodPrefab4;
 	public GameObject foodPrefab5;
+	public Camera cam1, cam2;
+	Vector3 camRotation;
 	
 	Dictionary<GameObject, bool>foodObjects;
 	Dictionary<GameObject, int>treeFoodItemsDone;
@@ -44,6 +46,9 @@ public class PlayerControl : MonoBehaviour {
 		GameEventManager.GameOver += GameOver;
 		anim = GameObject.Find ("ForBumpyanimation").GetComponent<Animator> ();
 		s_count = 0;
+
+		cam1.enabled = true;
+		cam2.enabled = false;
 	}
 
 	private void GameOver()
@@ -128,7 +133,28 @@ public class PlayerControl : MonoBehaviour {
 		if (s_count > 10)
 						anim.SetBool ("sink", false);
 
+
+		//script to toggle camera
+		if (Input.GetKeyDown(KeyCode.C)) {
+			cam1.enabled = !cam1.enabled;
+			cam2.enabled = !cam2.enabled;
+
+
+// trying to add rear view mirror code// trying to add rear view mirror code
+//			if(cam2.enabled == true){
+//				if (Input.GetKeyDown(KeyCode.R) && camRotation.y <=180)
+//					
+//					//cam2.transform.rotation = Quaternion.Euler(0,180,0);
+//				
+//			camRotation += new Vector3(0f,15f,0f);	
+//			cam2.transform.rotation = Quaternion.Euler(0f,camRotation.y,0f);
+//		}
+
+		}
+		
 	}
+
+
 	void OnControllerColliderHit(ControllerColliderHit hit){
 		if(canEnter && hit.gameObject.tag == "Tree"){
 			print ("Collided with " + hit.gameObject.tag);

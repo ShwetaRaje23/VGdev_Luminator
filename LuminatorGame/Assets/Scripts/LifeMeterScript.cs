@@ -4,6 +4,7 @@ using System.Collections;
 public class LifeMeterScript : MonoBehaviour {
 
 	private static LifeMeterScript instance;
+	GUIStyle currentStyle = null;
 
 	public int maxLife = 100;
 	public float currLife = 100f;
@@ -67,14 +68,16 @@ public class LifeMeterScript : MonoBehaviour {
 	{
 		GUI.backgroundColor = Color.green;
 		GUI.color = Color.green;
+		//GUISkin = currentStyle;
+		InitStyles ();
 
 		if (currLife < 10) {
 			
-						GUI.color = Color.red;
+			GUI.color = Color.red;
 
 				}
 		if(currLife >0)
-		GUI.Box (new Rect (150, 150, (Screen.width / 2 / (maxLife/currLife)), 20) , " " + (int)currLife);
+			GUI.Box (new Rect (150, 150, (Screen.width / 2 / (maxLife/currLife)), 20) , " " + (int)currLife, currentStyle);
 
 		if (currLife < 1) {
 
@@ -90,4 +93,40 @@ public class LifeMeterScript : MonoBehaviour {
 	{
 		return (int)instance.currLife;
 	}
+
+// new code for adding style to the Health bar
+
+
+	
+//	void OnGUI()
+//	{  
+//		InitStyles();
+//		GUI.Box( new Rect( 0, 0, 100, 100 ), "Hello", currentStyle );
+//	}
+//	
+	private void InitStyles()
+	{
+		if( currentStyle == null )
+		{
+			currentStyle = new GUIStyle( GUI.skin.box );
+			currentStyle.normal.background = MakeTex( 2, 2, new Color( 0f, 1f, 0f, 0.5f ) );
+		}
+	}
+	
+	private Texture2D MakeTex( int width, int height, Color col )
+	{
+		Color[] pix = new Color[width * height];
+		for( int i = 0; i < pix.Length; ++i )
+		{
+			pix[ i ] = col;
+		}
+		Texture2D result = new Texture2D( width, height );
+		result.SetPixels( pix );
+		result.Apply();
+		return result;
+	}
+
+
+
+
 }
