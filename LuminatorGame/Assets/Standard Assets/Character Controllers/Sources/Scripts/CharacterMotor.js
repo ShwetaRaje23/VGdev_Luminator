@@ -207,17 +207,30 @@ private var audio1: AudioSource;
 private var audioFlag: int = 0;
 private var audioFlag1: int = 0;
 
+private var move: boolean = true;
+private var sink:boolean = false;
+
+private var sinkRotation: Vector3;
+private var sinkTranslate: Vector3;
+
+private var sinkFlag:boolean = false;
+private var s_count:int = 0;
+
 function Awake () {
 	controller = GetComponent (CharacterController);
 	anim = GameObject.Find("ForBumpyanimation").GetComponent(Animator);
 	audio1 = GetComponent(AudioSource);
 	tr = transform;
+	sinkRotation = new Vector3(0f,0f,0f);
+	sinkTranslate = new Vector3(0f,38f,0f);
 		
 }
 
 
 private function UpdateFunction () {
 //Debug.Log("function called");
+if(move)
+{
 	var rawInput: float; 
 	inputRotate = Input.GetAxis ("Horizontal");
 	//Debug.Log("inputRotate: "+inputRotate);
@@ -230,6 +243,7 @@ private function UpdateFunction () {
 	rawInput = Input.GetAxis ("Vertical");
 						inputMove = 0f;
 						//Debug.Log("rawInput: "+rawInput);
+						
 						if (fwdDown && rawInput <= 0f) {
 						//Debug.Log("Entered forward up");
 								fwdDown = false;
@@ -258,7 +272,7 @@ private function UpdateFunction () {
 								val = groundAttack.Evaluate ((Time.time - fwdPress)/10.0f);
 								//Debug.Log("val: "+val+" time: "+(Time.time-fwdPress));
 								
-								if(val<0.98 && audioFlag != 1)
+								/*if(val<0.98 && audioFlag != 1)
 								{
 								Debug.Log("playing sound acc, audioFlag: "+audioFlag);
 								audioFlag = 1;
@@ -271,7 +285,7 @@ private function UpdateFunction () {
 								audioFlag = 0;
 								audio1.audio.clip = Resources.Load("car_drive") as AudioClip;
 								audio1.Play();
-								}
+								}*/
 								
 								if (val < 0.001)
 										val = 0f; 
@@ -291,12 +305,12 @@ Debug.Log("Entered fwdDown");
 								if (val < 0.001)
 										val = 0f; 
 								inputMove += val;
-								if((audioFlag == 0 || audioFlag == 1) && val!=0f)
+								/*if((audioFlag == 0 || audioFlag == 1) && val!=0f)
 								{
 								audioFlag = 2;
 								audio.Pause();
 								//audio1.audio.clip = Resources.Load("car_slow") as AudioClip;
-								audio1.PlayOneShot(Resources.Load("car_slow") as AudioClip);}
+								audio1.PlayOneShot(Resources.Load("car_slow") as AudioClip);}*/
 						}
 						if (backDown) {
 								val2 = groundAttack.Evaluate ((Time.time - backPress)/10.0f);
@@ -304,16 +318,16 @@ Debug.Log("Entered fwdDown");
 								if(val2<0.98 && audioFlag1 != 1)
 								{
 								Debug.Log("playing sound acc, audioFlag: "+audioFlag);
-								audioFlag1 = 1;
-								audio1.Pause();
-								audio1.audio.clip = Resources.Load("car_acc") as AudioClip;
-								audio1.Play();
+								//audioFlag1 = 1;
+								//audio1.Pause();
+								//audio1.audio.clip = Resources.Load("car_acc") as AudioClip;
+								//audio1.Play();
 								}
 								else if(audioFlag1 != 0 && val2>=0.98)
 								{
-								audioFlag1 = 0;
-								audio1.audio.clip = Resources.Load("car_drive") as AudioClip;
-								audio1.Play();
+								//audioFlag1 = 0;
+								//audio1.audio.clip = Resources.Load("car_drive") as AudioClip;
+								//audio1.Play();
 								}
 								
 								
@@ -327,12 +341,12 @@ Debug.Log("Entered fwdDown");
 							val2=val2*tval1;
 								if (val2 < 0.001)
 										val2 = 0f; 
-							if((audioFlag1 == 0 || audioFlag1 == 1) && val2!=0f)
-								{
-								audioFlag1 = 2;
-								audio.Pause();
+							//if((audioFlag1 == 0 || audioFlag1 == 1) && val2!=0f)
+							//		{
+								//audioFlag1 = 2;
+								//audio.Pause();
 								//audio1.audio.clip = Resources.Load("car_slow") as AudioClip;
-								audio1.PlayOneShot(Resources.Load("car_slow") as AudioClip);}
+								//audio1.PlayOneShot(Resources.Load("car_slow") as AudioClip);}
 							
 							inputMove -= val2;
 						
@@ -341,7 +355,18 @@ Debug.Log("Entered fwdDown");
 								inputMove = 1f;			
 						if (inputMove < -1f)
 								inputMove = -1f;
-					
+								
+						if(inputMove!=0f && !audio.isPlaying)
+						{
+						//audioFlag1 = 0;
+						
+								audio1.audio.clip = Resources.Load("car_drive") as AudioClip;
+								audio1.Play();
+						}
+						else if (inputMove == 0f)
+							audio1.Pause();
+							
+							
 						horizontalVelocity = new Vector3 (controller.velocity.x, 1, controller.velocity.z);
 						horizontalVelocity = transform.InverseTransformDirection (horizontalVelocity);
 						horizontalSpeed = horizontalVelocity.z;  // want the plus or minus on speed
@@ -394,164 +419,50 @@ Debug.Log("Entered fwdDown");
 								moveVector.x /= 1.15f;  // slow down sideways movement
 								moveVector.z /= 1.15f;  // slow down sideways movement
 						}
-					
+}
+else //move is false
+{
+
+	if(sink) //sink animation
+	{
+	fwdDown = false;
+	backDown = false;
+	
+	if (Input.GetKeyDown (KeyCode.Space))
+						s_count++;
+		if (s_count > 10)
+						{sink=false;
+						move=true;s_count = 0;}
+
+							anim.SetBool("motion",false);
+							audio1.Pause();
+							audio1.audio.clip = Resources.Load("drowning-bubbles") as AudioClip;
+							audio1.Play();
+							if(sinkRotation.y>=360.0f)
+							{Debug.Log("Entered reset rotation");sinkRotation = new Vector3(0f,0f,0f);}
+							else
+							{sinkRotation+=new Vector3(0f,0.5f,0f);	}
+							transform.rotation = Quaternion.Euler(0f,sinkRotation.y,0f);
+							if(!sinkFlag)
+							{//Debug.Log("Going down, sinkTranslate.y: "+sinkTranslate.y);
+							sinkTranslate.y-=0.001f*inputMove*moveSpeed;
+							if(sinkTranslate.y<36.0f)
+							sinkFlag=!sinkFlag;
+							}
+							else{
+								sinkTranslate.y+=0.005f*inputMove*moveSpeed;
+								if(sinkTranslate.y>40f)
+							sinkFlag=!sinkFlag;
+								}
+							
+							transform.position=new Vector3(transform.position.x,sinkTranslate.y,transform.position.z);
+	}
+}					
 
 
-
-//	// We copy the actual velocity into a temporary variable that we can manipulate.
-//	var velocity : Vector3 = movement.velocity;
-//	
-//	// Update velocity based on input
-//	velocity = ApplyInputVelocityChange(velocity);
-//	
-//	// Apply gravity and jumping force
-//	velocity = ApplyGravityAndJumping (velocity);
-//	
-//	// Moving platform support
-//	var moveDistance : Vector3 = Vector3.zero;
-//	if (MoveWithPlatform()) {
-//		var newGlobalPoint : Vector3 = movingPlatform.activePlatform.TransformPoint(movingPlatform.activeLocalPoint);
-//		moveDistance = (newGlobalPoint - movingPlatform.activeGlobalPoint);
-//		
-//		moveDistance.y -= movement.gravity*Time.deltaTime;
-//		
-//		Debug.Log("Moving with platform, movedistance.y: "+moveDistance.y);
-//		
-//		if (moveDistance != Vector3.zero)
-//			controller.Move(moveDistance);
-//		
-//		// Support moving platform rotation as well:
-//        var newGlobalRotation : Quaternion = movingPlatform.activePlatform.rotation * movingPlatform.activeLocalRotation;
-//        var rotationDiff : Quaternion = newGlobalRotation * Quaternion.Inverse(movingPlatform.activeGlobalRotation);
-//        
-//        var yRotation = rotationDiff.eulerAngles.y;
-//        if (yRotation != 0) {
-//	        // Prevent rotation of the local up vector
-//	        tr.Rotate(0, yRotation, 0);
-//        }
-//	}
-//	
-//	// Save lastPosition for velocity calculation.
-//	var lastPosition : Vector3 = tr.position;
-//	
-//	// We always want the movement to be framerate independent.  Multiplying by Time.deltaTime does this.
-//	var currentMovementOffset : Vector3 = velocity * Time.deltaTime;
-//	
-//	// Find out how much we need to push towards the ground to avoid loosing grouning
-//	// when walking down a step or over a sharp change in slope.
-//	var pushDownOffset : float = Mathf.Max(controller.stepOffset, Vector3(currentMovementOffset.x, 0, currentMovementOffset.z).magnitude);
-//	if (grounded)
-//		currentMovementOffset -= pushDownOffset * Vector3.up;
-//	
-//	// Reset variables that will be set by collision function
-//	movingPlatform.hitPlatform = null;
-//	groundNormal = Vector3.zero;
-//	
-//	//apply gravity
-//	//currentMovementOffset.y-=movement.gravity*Time.deltaTime;
-//	
-//   	// Move our character!
-//	movement.collisionFlags = controller.Move (currentMovementOffset);
-//	
-//	movement.lastHitPoint = movement.hitPoint;
-//	lastGroundNormal = groundNormal;
-//	
-//	if (movingPlatform.enabled && movingPlatform.activePlatform != movingPlatform.hitPlatform) {
-//		if (movingPlatform.hitPlatform != null) {
-//			movingPlatform.activePlatform = movingPlatform.hitPlatform;
-//			movingPlatform.lastMatrix = movingPlatform.hitPlatform.localToWorldMatrix;
-//			movingPlatform.newPlatform = true;
-//		}
-//	}
-//	
-//	// Calculate the velocity based on the current and previous position.  
-//	// This means our velocity will only be the amount the character actually moved as a result of collisions.
-//	var oldHVelocity : Vector3 = new Vector3(velocity.x, 0, velocity.z);
-//	movement.velocity = (tr.position - lastPosition) / Time.deltaTime;
-//	var newHVelocity : Vector3 = new Vector3(movement.velocity.x, 0, movement.velocity.z);
-//	
-//	// The CharacterController can be moved in unwanted directions when colliding with things.
-//	// We want to prevent this from influencing the recorded velocity.
-//	if (oldHVelocity == Vector3.zero) {
-//		movement.velocity = new Vector3(0, movement.velocity.y, 0);
-//	}
-//	else {
-//		var projectedNewVelocity : float = Vector3.Dot(newHVelocity, oldHVelocity) / oldHVelocity.sqrMagnitude;
-//		movement.velocity = oldHVelocity * Mathf.Clamp01(projectedNewVelocity) + movement.velocity.y * Vector3.up;
-//	}
-//	
-//	if (movement.velocity.y < velocity.y - 0.001) {
-//		if (movement.velocity.y < 0) {
-//			// Something is forcing the CharacterController down faster than it should.
-//			// Ignore this
-//			movement.velocity.y = velocity.y;
-//		}
-//		else {
-//			// The upwards movement of the CharacterController has been blocked.
-//			// This is treated like a ceiling collision - stop further jumping here.
-//			jumping.holdingJumpButton = false;
-//		}
-//	}
-//	
-//	// We were grounded but just loosed grounding
-//	if (grounded && !IsGroundedTest()) {
-//		grounded = false;
-//		
-//		// Apply inertia from platform
-//		if (movingPlatform.enabled &&
-//			(movingPlatform.movementTransfer == MovementTransferOnJump.InitTransfer ||
-//			movingPlatform.movementTransfer == MovementTransferOnJump.PermaTransfer)
-//		) {
-//			movement.frameVelocity = movingPlatform.platformVelocity;
-//			movement.velocity += movingPlatform.platformVelocity;
-//		}
-//		
-//		SendMessage("OnFall", SendMessageOptions.DontRequireReceiver);
-//		// We pushed the character down to ensure it would stay on the ground if there was any.
-//		// But there wasn't so now we cancel the downwards offset to make the fall smoother.
-//		tr.position += pushDownOffset * Vector3.up;
-//	}
-//	// We were not grounded but just landed on something
-//	else if (!grounded && IsGroundedTest()) {
-//		grounded = true;
-//		jumping.jumping = false;
-//		SubtractNewPlatformVelocity();
-//		
-//		SendMessage("OnLand", SendMessageOptions.DontRequireReceiver);
-//	}
-//	
-//	// Moving platforms support
-//	if (MoveWithPlatform()) {
-//		// Use the center of the lower half sphere of the capsule as reference point.
-//		// This works best when the character is standing on moving tilting platforms. 
-//		movingPlatform.activeGlobalPoint = tr.position + Vector3.up * (controller.center.y - controller.height*0.5 + controller.radius);
-//		movingPlatform.activeLocalPoint = movingPlatform.activePlatform.InverseTransformPoint(movingPlatform.activeGlobalPoint);
-//		
-//		// Support moving platform rotation as well:
-//        movingPlatform.activeGlobalRotation = tr.rotation;
-//        movingPlatform.activeLocalRotation = Quaternion.Inverse(movingPlatform.activePlatform.rotation) * movingPlatform.activeGlobalRotation; 
-//	}
 }
 
 function FixedUpdate () {
-//	if (movingPlatform.enabled) {
-//		if (movingPlatform.activePlatform != null) {
-//			if (!movingPlatform.newPlatform) {
-//				var lastVelocity : Vector3 = movingPlatform.platformVelocity;
-//				
-//				movingPlatform.platformVelocity = (
-//					movingPlatform.activePlatform.localToWorldMatrix.MultiplyPoint3x4(movingPlatform.activeLocalPoint)
-//					- movingPlatform.lastMatrix.MultiplyPoint3x4(movingPlatform.activeLocalPoint)
-//				) / Time.deltaTime;
-//			}
-//			movingPlatform.lastMatrix = movingPlatform.activePlatform.localToWorldMatrix;
-//			movingPlatform.newPlatform = false;
-//		}
-//		else {
-//			movingPlatform.platformVelocity = Vector3.zero;	
-//		}
-//	}
-	
 	if (useFixedUpdate)
 		UpdateFunction();
 }
@@ -806,6 +717,50 @@ function SetVelocity (velocity : Vector3) {
 	movement.frameVelocity = Vector3.zero;
 	SendMessage("OnExternalVelocity");
 }
+
+function OnTriggerEnter(other: Collider)
+		{
+		Debug.Log ("Collision with " + other.name);
+		
+		if (other.name == "ExitZone") {
+		move=false;
+		anim.SetBool("motion",false);
+		}
+		
+		if (other.name == "sinkTrigger") {
+		move = false;
+		sink = true;}
+			//trying out PlayerPrefs restriction
+		/*	Vector3 pos = transform.position;
+			pos.z = -15;
+			pos.x =39;
+			transform.position = new Vector3(pos.x, transform.position.y, pos.z );
+			//transform.position.z = pos.z;
+
+
+			transform.position = pos;
+			anim.SetBool("sink",true);
+			audio.PlayOneShot(drowning);
+			s_count = 0;*/
+//			GameObject playermotion = GameObject.Find("ForBumpyanimation");
+//
+//
+//			
+//			for(int loopVariable = 0 ; loopVariable < 3; loopVariable++)
+//			{
+//				playermotion.animation.Play("SinkMotion");
+//				
+//				audio.PlayOneShot(drowning);
+//				
+//				if (Input.GetKeyDown("s"))
+//				{
+//					playermotion.animation.Stop("SinkMotion");
+//					break;
+//				}
+			//}
+			
+		}
+
 
 // Require a character controller to be attached to the same game object
 @script RequireComponent (CharacterController)

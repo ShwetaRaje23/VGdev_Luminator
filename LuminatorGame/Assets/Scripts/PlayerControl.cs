@@ -169,8 +169,8 @@ public class PlayerControl : MonoBehaviour {
 
 
 			transform.position = pos;
-			anim.SetBool("sink",true);
-			audio.PlayOneShot(drowning);
+			//anim.SetBool("sink",true);
+			//audio.PlayOneShot(drowning);
 			s_count = 0;
 //			GameObject playermotion = GameObject.Find("ForBumpyanimation");
 //
