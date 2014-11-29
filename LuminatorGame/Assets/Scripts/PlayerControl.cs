@@ -135,7 +135,7 @@ public class PlayerControl : MonoBehaviour {
 
 
 		//script to toggle camera
-		if (Input.GetKeyDown(KeyCode.C)) {
+		if (Input.GetKeyDown(KeyCode.R)) {
 			cam1.enabled = !cam1.enabled;
 			cam2.enabled = !cam2.enabled;
 

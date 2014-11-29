@@ -66,8 +66,8 @@ public class LifeMeterScript : MonoBehaviour {
 
 	void OnGUI()
 	{
-		GUI.backgroundColor = Color.green;
-		GUI.color = Color.green;
+		//GUI.backgroundColor = Color.green;
+		//GUI.color = Color.green;
 		//GUISkin = currentStyle;
 		InitStyles ();
 
@@ -77,7 +77,7 @@ public class LifeMeterScript : MonoBehaviour {
 
 				}
 		if(currLife >0)
-			GUI.Box (new Rect (150, 150, (Screen.width / 2 / (maxLife/currLife)), 20) , " " + (int)currLife, currentStyle);
+			GUI.Box (new Rect (50, 50, (Screen.width / 2 / (maxLife/currLife)), 20) , " " + (int)currLife, currentStyle);
 
 		if (currLife < 1) {
 
@@ -109,7 +109,7 @@ public class LifeMeterScript : MonoBehaviour {
 		if( currentStyle == null )
 		{
 			currentStyle = new GUIStyle( GUI.skin.box );
-			currentStyle.normal.background = MakeTex( 2, 2, new Color( 0f, 1f, 0f, 0.5f ) );
+			currentStyle.normal.background = MakeTex( 2, 2, new Color( 1f, 1f, 1f, 0.3f ) );
 		}
 	}
 	
