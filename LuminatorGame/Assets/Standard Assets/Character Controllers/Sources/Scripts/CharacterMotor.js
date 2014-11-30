@@ -216,14 +216,34 @@ private var sinkTranslate: Vector3;
 private var sinkFlag:boolean = false;
 private var s_count:int = 0;
 
+private var netTrap:boolean = false;
+private var TrapName:String;
+
+private var netRotateH: float= 0f;
+private var netRotateV: float= 0f;
+private var netTranslate: Vector3;
+
+private var netFlag1:boolean = false;
+private var netFlag2:boolean = false;
+
+private var zoffset:float = 0f;
+private var swordHitCount: int = 0;
+
+private var sword:boolean = false;
+
+public var swordText:GUIText;
+
 function Awake () {
+TrapName = "";
+swordText.enabled = false;
 	controller = GetComponent (CharacterController);
 	anim = GameObject.Find("ForBumpyanimation").GetComponent(Animator);
 	audio1 = GetComponent(AudioSource);
 	tr = transform;
 	sinkRotation = new Vector3(0f,0f,0f);
 	sinkTranslate = new Vector3(0f,38f,0f);
-		
+	netRotation = new Vector3(0f,0f,0f);
+	netTranslate = new Vector3(0f,37.5f,0f);
 }
 
 
@@ -422,6 +442,60 @@ Debug.Log("Entered fwdDown");
 }
 else //move is false
 {
+
+if(netTrap) //animation on net trap
+{
+swordText.enabled = true;
+StartCoroutine("FadeInstructions");
+netRotateH= Input.GetAxis ("Horizontal");
+netRotateV= Input.GetAxis ("Vertical");
+transform.Rotate(netRotateV*rotateSpeed, netRotateH * rotateSpeed, 0f);
+	fwdDown = false;
+	backDown = false;
+	anim.SetBool("motion",false);
+	audio1.Pause();
+	//audio1.audio.clip = Resources.Load("drowning-bubbles") as AudioClip;
+	//audio1.Play();
+	if(netTranslate.y<43.5f)
+		netTranslate.y+=0.1f;
+	//else
+	//	netTranslate.y-=0.1f;
+	if(!netFlag2)
+	{
+		zoffset+=0.05f;
+		//netTranslate.z+=zoffset;
+		if(zoffset>2f)
+			{netFlag2 = !netFlag2; netTranslate.z+=2.05f;}
+	transform.position=new Vector3(transform.position.x,netTranslate.y,netTranslate.z+zoffset);						
+	}
+	else{
+//	Debug.Log("Entered negative flag");
+	//netTranslate.z-=1-zoffset;
+		zoffset-=0.05f;
+		//netTranslate-=zoffset;
+		if(zoffset<0f)
+			{netFlag2 = !netFlag2;netTranslate.z-=2.05f;}
+	transform.position=new Vector3(transform.position.x,netTranslate.y,netTranslate.z-(2-zoffset));						
+	}
+	if(sword)
+	{
+	if (Input.GetKeyDown (KeyCode.Z))
+				{if(!audio1.isPlaying)
+				{audio1.audio.clip = Resources.Load("swoosh-1") as AudioClip;
+				audio1.Play();		}
+				swordHitCount++;}
+		if (swordHitCount > 10)
+						{audio1.Pause();
+						netTrap=false;
+						move=true;swordHitCount = 0;
+						//Debug.Log(TrapName.Substring(TrapName.Length-1,1));
+						transform.rotation = Quaternion.Euler(0f,0f,0f);
+						transform.position=GameObject.Find(TrapName.Substring(TrapName.Length-1,1)).transform.position;
+						swordText.enabled = false;
+						}
+	}
+	
+}
 
 	if(sink) //sink animation
 	{
@@ -730,6 +804,24 @@ function OnTriggerEnter(other: Collider)
 		if (other.name == "sinkTrigger") {
 		move = false;
 		sink = true;}
+		
+		if(other.tag == "netTrap")
+		{
+		move = false;
+		netTrap = true;
+		netTranslate.z = transform.position.z;
+		TrapName = other.name;
+		}
+		
+		if(other.tag == "sword")
+		{
+		sword = true;
+		other.active=false;
+		audio1.Pause();
+							audio1.audio.clip = Resources.Load("swoosh-1") as AudioClip;
+							audio1.PlayOneShot(audio1.audio.clip);
+							
+		}
 			//trying out PlayerPrefs restriction
 		/*	Vector3 pos = transform.position;
 			pos.z = -15;
@@ -761,6 +853,18 @@ function OnTriggerEnter(other: Collider)
 			
 		}
 
+function FadeInstructions() {
+		var f:float;
+		var c:Color;
+		for (f = 5f; f >= 0; f -= 0.05f) {
+			c = swordText.color;
+			c.a = f/5f;
+			swordText.color = c;
+			yield WaitForSeconds(.01f);
+		}
+		swordText.enabled = false;
+	}
+	
 
 // Require a character controller to be attached to the same game object
 @script RequireComponent (CharacterController)

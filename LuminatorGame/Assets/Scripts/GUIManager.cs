@@ -4,6 +4,7 @@ using System.Collections;
 public class GUIManager : MonoBehaviour {
 
 	public GUIText gameOverText;
+	public GUIText useSwordText;
 	
 	// this seems pretty dodgy, although I guess if you know there is just one ... ugh
 	private static GUIManager instance;
@@ -14,6 +15,7 @@ public class GUIManager : MonoBehaviour {
 		GameEventManager.GameStart += GameStart;
 		GameEventManager.GameOver += GameOver;
 		gameOverText.enabled = false;
+		useSwordText.enabled = false;
 //		instructionsText.fontStyle = FontStyle.Bold;
 //		instructionsText.fontSize = 32;
 //		instructionsText.color = Color.white;

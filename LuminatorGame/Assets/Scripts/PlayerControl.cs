@@ -185,7 +185,7 @@ public class PlayerControl : MonoBehaviour {
 		
 		if (other.name == "sinkTrigger") {
 
-
+			/*
 			//trying out PlayerPrefs restriction
 			Vector3 pos = transform.position;
 			pos.z = -15;
@@ -197,7 +197,7 @@ public class PlayerControl : MonoBehaviour {
 			transform.position = pos;
 			//anim.SetBool("sink",true);
 			//audio.PlayOneShot(drowning);
-			s_count = 0;
+			s_count = 0;*/
 //			GameObject playermotion = GameObject.Find("ForBumpyanimation");
 //
 //
