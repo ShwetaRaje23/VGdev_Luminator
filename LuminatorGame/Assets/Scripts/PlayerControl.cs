@@ -24,6 +24,7 @@ public class PlayerControl : MonoBehaviour {
 	int foodObjectHitCount;
 	private Animator anim;
 	private int s_count;
+	AudioSource[] audioSource;
 
 	// Use this for initialization
 	void Start () {
@@ -33,7 +34,7 @@ public class PlayerControl : MonoBehaviour {
 		headLight2.light.color = new Color(1f, 0.96f, 0.88f, 1f);
 		hitTree = false;
 		hitTreeObject = null;
-		blinkTime = 20;
+		blinkTime = 30;
 		canEnter = true;
 		dropFood = false;
 		foodObjects = new Dictionary<GameObject, bool> ();
@@ -43,6 +44,10 @@ public class PlayerControl : MonoBehaviour {
 			treeFoodItemsDone [key] = 0;
 		}
 		foodObjectHitCount = 0;
+
+		audioSource = gameObject.GetComponents<AudioSource> ();
+		print ("length of audioSource is " + audioSource.Length);
+
 		GameEventManager.GameOver += GameOver;
 		anim = GameObject.Find ("ForBumpyanimation").GetComponent<Animator> ();
 		s_count = 0;
@@ -66,7 +71,7 @@ public class PlayerControl : MonoBehaviour {
 	void FixedUpdate () {
 
 		GameObject gg;
-		if (dropFood && blinkTime == 20) {
+		if (dropFood && blinkTime == 30) {
 			
 			if(treeFoodItemsDone[hitTreeObject] < 5){
 				foodFallStartPos = gameObject.transform.position;
@@ -101,17 +106,20 @@ public class PlayerControl : MonoBehaviour {
 			dropFood = false;
 		}
 		if(hitTree){
+			if(!audioSource[1].isPlaying){
+				audioSource[1].Play();
+			}
 			if(blinkTime > 0){
-				var r = Random.Range(0.0F, 1.0F);
-				var g = Random.Range(0.0F, 0.3F);
-				var b = Random.Range(0.5F, 0.8F);
+				var r = Random.Range(0.3F, 0.4F);
+				var g = Random.Range(0.0F, 0.2F);
+				var b = Random.Range(0.9F, 1F);
 				headLight1.light.color = new Color(r, g, b, 1F);
 				headLight2.light.color = new Color(r, g, b, 1F);
 				blinkTime = blinkTime - 1;
 			}
 			else{
 				hitTree = false;
-				blinkTime = 20;
+				blinkTime = 30;
 				hitTreeObject = null;
 				headLight1.light.color = new Color(1f, 0.96f, 0.88f, 1f);
 				headLight2.light.color = new Color(1f, 0.96f, 0.88f, 1f);
@@ -165,6 +173,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		if (hit.gameObject.tag == "foodObject") {
+			audioSource[2].Play();
 			foodObjectHitCount++;
 			if(foodObjects.ContainsKey(hit.gameObject)){
 				foodObjects.Remove(hit.gameObject);
