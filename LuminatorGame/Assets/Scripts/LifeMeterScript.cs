@@ -77,7 +77,7 @@ public class LifeMeterScript : MonoBehaviour {
 
 				}
 		if(currLife >0)
-			GUI.Box (new Rect (50, 50, (Screen.width / 2 / (maxLife/currLife)), 20) , " " + (int)currLife, currentStyle);
+			GUI.Box (new Rect (50, 50, (Screen.width / 2 / (maxLife/currLife)), 20) , "" + (int)currLife, currentStyle);
 
 		if (currLife < 1) {
 

@@ -14,7 +14,9 @@ public class PlayerControl : MonoBehaviour {
 	
 	Dictionary<GameObject, bool>foodObjects;
 	Dictionary<GameObject, int>treeFoodItemsDone;
+	Dictionary<GameObject, string>foodNames;
 	GameObject headLight1, headLight2;
+	GameObject foodPickText;
 	bool hitTree;
 	int blinkTime;
 	bool dropFood;
@@ -30,6 +32,7 @@ public class PlayerControl : MonoBehaviour {
 	void Start () {
 		headLight1 = GameObject.Find("headlight1");
 		headLight2 = GameObject.Find("headlight2");
+		foodPickText = GameObject.Find ("FoodPickText");
 		headLight1.light.color = new Color(1f, 0.96f, 0.88f, 1f);
 		headLight2.light.color = new Color(1f, 0.96f, 0.88f, 1f);
 		hitTree = false;
@@ -38,7 +41,23 @@ public class PlayerControl : MonoBehaviour {
 		canEnter = true;
 		dropFood = false;
 		foodObjects = new Dictionary<GameObject, bool> ();
+		foodNames = new Dictionary<GameObject, string > ();
 		GameObject[] trees = GameObject.FindGameObjectsWithTag ("Tree");
+		GameObject[] alreadyExistingFoodObjects = GameObject.FindGameObjectsWithTag ("foodObject");
+
+		foreach (var i in alreadyExistingFoodObjects) {
+			if (i.name == "Food1" || i.name == "Food2")
+				foodNames [i] = "Carrot";
+			else if (i.name == "Food3" || i.name == "Food4")
+				foodNames [i] = "Corn";
+			else if (i.name == "Food5" || i.name == "Food6" || i.name == "Food12")
+				foodNames [i] = "Pizza";
+			else if (i.name == "Food7" || i.name == "Food8")
+				foodNames [i] = "Sushi";
+			else
+				foodNames [i] = "WaterMelon";
+		}
+		//alreadyExistingFoodObjects [0].name
 		treeFoodItemsDone = new Dictionary<GameObject,int> ();
 		foreach (var key in trees) {
 			treeFoodItemsDone [key] = 0;
@@ -79,22 +98,27 @@ public class PlayerControl : MonoBehaviour {
 				if(treeFoodItemsDone[hitTreeObject] == 0){
 					foodFallStartPos.x += 5;
 					gg = Instantiate (foodPrefab1, foodFallStartPos,Quaternion.Euler (0,0,0)) as GameObject;
+					foodNames[gg] = "Corn";
 				}
 				else if(treeFoodItemsDone[hitTreeObject] == 1){
 					foodFallStartPos.x -= 5;
 					gg = Instantiate (foodPrefab2, foodFallStartPos,Quaternion.Euler (0,0,0)) as GameObject;
+					foodNames[gg] = "Carrot";
 				}
 				else if(treeFoodItemsDone[hitTreeObject] == 2){
 					foodFallStartPos.x += 4;
 					gg = Instantiate (foodPrefab3, foodFallStartPos,Quaternion.Euler (0,0,0)) as GameObject;
+					foodNames[gg] = "Pizza";
 				}
 				else if(treeFoodItemsDone[hitTreeObject] == 3){
 					foodFallStartPos.x -= 4;
 					gg = Instantiate (foodPrefab4, foodFallStartPos,Quaternion.Euler (0,0,0)) as GameObject;
+					foodNames[gg] = "WaterMelon";
 				}
 				else{
 					foodFallStartPos.x += 3;
 					gg = Instantiate (foodPrefab5, foodFallStartPos,Quaternion.Euler (0,0,0)) as GameObject;
+					foodNames[gg] = "Sushi";
 				}
 
 				gg.gameObject.tag = "foodObject";
@@ -162,7 +186,15 @@ public class PlayerControl : MonoBehaviour {
 		
 	}
 
-
+	IEnumerator FoodPickNotificationFade(){
+		for (float f = 5f; f >= 0; f -= 0.1f) {
+			Color c = foodPickText.guiText.color;
+			c.a = f/5f;
+			foodPickText.guiText.color = c;
+			yield return new WaitForSeconds(.01f);
+		}
+		foodPickText.guiText.enabled = false;
+	}
 	void OnControllerColliderHit(ControllerColliderHit hit){
 		if(canEnter && hit.gameObject.tag == "Tree"){
 			print ("Collided with " + hit.gameObject.tag);
@@ -174,9 +206,13 @@ public class PlayerControl : MonoBehaviour {
 
 		if (hit.gameObject.tag == "foodObject") {
 			audioSource[2].Play();
+			foodPickText.guiText.enabled = true;
+			foodPickText.guiText.text = "Eating " + foodNames[hit.gameObject] + " increased health by 5 points!";
+			StartCoroutine (FoodPickNotificationFade());
 			foodObjectHitCount++;
 			if(foodObjects.ContainsKey(hit.gameObject)){
 				foodObjects.Remove(hit.gameObject);
+				foodNames.Remove (hit.gameObject);
 			}
 			Destroy (hit.gameObject);
 		}

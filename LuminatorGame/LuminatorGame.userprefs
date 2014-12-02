@@ -1,8 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerControl.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/LifeMeterScript.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerControl.cs" Line="123" Column="30" />
+      <File FileName="Assets/Scripts/PlayerControl.cs" Line="168" Column="38" />
+      <File FileName="../../../physics-2d/physics-2d-platformer-example/Assets/Scripts/GUIManager.cs" Line="34" Column="36" />
+      <File FileName="Assets/Scripts/LifeMeterScript.cs" Line="63" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
