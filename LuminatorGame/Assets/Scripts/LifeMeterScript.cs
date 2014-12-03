@@ -31,8 +31,7 @@ public class LifeMeterScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	if (!gameOver)
-						UpdateHealth ();
-
+		UpdateHealth ();
 	}
 
 	void UpdateHealth()
@@ -40,6 +39,7 @@ public class LifeMeterScript : MonoBehaviour {
 		GameObject g = GameObject.Find ("Player");
 		PlayerControl otherScript = g.GetComponent<PlayerControl>();
 		int currentNumFoodItemsPicked;
+		int numLives;
 
 		currentNumFoodItemsPicked = otherScript.getNumFoodItemsPicked();
 
@@ -57,10 +57,17 @@ public class LifeMeterScript : MonoBehaviour {
 		//Debug.Log ("Life " + currLife);
 		
 		 if ((int)currLife < 1) {
-			
-			//Stop Game !
-			GUIManager.SetGameOver(LifeMeterScript.GetHealth());
-			GameEventManager.TriggerGameOver();
+			numLives = otherScript.getNumLives();
+
+			if(numLives == 0){
+				//Stop Game !
+				GUIManager.SetGameOver(LifeMeterScript.GetHealth());
+				GameEventManager.TriggerGameOver();
+			}
+			else{
+				otherScript.setNumLives(numLives - 1);
+				currLife = 100;
+			}
 		}
 	}
 
