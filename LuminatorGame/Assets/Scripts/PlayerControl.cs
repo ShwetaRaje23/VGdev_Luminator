@@ -16,7 +16,9 @@ public class PlayerControl : MonoBehaviour {
 	Dictionary<GameObject, int>treeFoodItemsDone;
 	Dictionary<GameObject, string>foodNames;
 	GameObject headLight1, headLight2;
-	GameObject foodPickText;
+	GameObject displayText;
+	GameObject scoreText;
+	GameObject livesText;
 	bool hitTree;
 	int blinkTime;
 	bool dropFood;
@@ -27,12 +29,15 @@ public class PlayerControl : MonoBehaviour {
 	private Animator anim;
 	private int s_count;
 	AudioSource[] audioSource;
+	int score;
+	int lives;
+	int highScoreFactor;
 
 	// Use this for initialization
 	void Start () {
 		headLight1 = GameObject.Find("headlight1");
 		headLight2 = GameObject.Find("headlight2");
-		foodPickText = GameObject.Find ("FoodPickText");
+		displayText = GameObject.Find ("DisplayText");
 		headLight1.light.color = new Color(1f, 0.96f, 0.88f, 1f);
 		headLight2.light.color = new Color(1f, 0.96f, 0.88f, 1f);
 		hitTree = false;
@@ -45,14 +50,27 @@ public class PlayerControl : MonoBehaviour {
 		GameObject[] trees = GameObject.FindGameObjectsWithTag ("Tree");
 		GameObject[] alreadyExistingFoodObjects = GameObject.FindGameObjectsWithTag ("foodObject");
 
+		scoreText = GameObject.Find ("ScoreText2");
+		livesText = GameObject.Find ("LivesText2");
+		highScoreFactor = 1;
+
+		score = 0; // start with 0 points
+		lives = 0; // start with 0 lives
+		scoreText.guiText.text = score.ToString(); 
+		livesText.guiText.text = lives.ToString();
+
 		foreach (var i in alreadyExistingFoodObjects) {
-			if (i.name == "Food1" || i.name == "Food2")
+			if (i.name == "Food1" || i.name == "Food2" || i.name == "Food13" || i.name == "Food14"
+			    || i.name == "Food15" || i.name == "Food16")
 				foodNames [i] = "Carrot";
-			else if (i.name == "Food3" || i.name == "Food4")
+			else if (i.name == "Food3" || i.name == "Food4" || i.name == "Food17" || i.name == "Food18"
+			         || i.name == "Food19" || i.name == "Food20")
 				foodNames [i] = "Corn";
-			else if (i.name == "Food5" || i.name == "Food6" || i.name == "Food12")
+			else if (i.name == "Food5" || i.name == "Food6" || i.name == "Food12" || i.name == "Food21"
+			         || i.name == "Food22" || i.name == "Food23" || i.name == "Food24")
 				foodNames [i] = "Pizza";
-			else if (i.name == "Food7" || i.name == "Food8")
+			else if (i.name == "Food7" || i.name == "Food8" || i.name == "Food25" || i.name == "Food26"
+			         || i.name == "Food27" || i.name == "Food28")
 				foodNames [i] = "Sushi";
 			else
 				foodNames [i] = "WaterMelon";
@@ -84,6 +102,18 @@ public class PlayerControl : MonoBehaviour {
 
 	public int getNumFoodItemsPicked(){
 		return foodObjectHitCount;
+	}
+
+	public int getNumLives(){
+		return lives;
+	}
+	public void setNumLives(int numLives){
+		lives = numLives;
+		livesText.guiText.text = lives.ToString ();
+		displayText.guiText.enabled = true;
+		displayText.guiText.text = "Hurry, you have " + lives.ToString() + " lives remaining after this!";
+		StartCoroutine (displayNotificationFade());
+		
 	}
 
 	// Update is called once per frame
@@ -186,16 +216,17 @@ public class PlayerControl : MonoBehaviour {
 		
 	}
 
-	IEnumerator FoodPickNotificationFade(){
+	IEnumerator displayNotificationFade(){
 		for (float f = 5f; f >= 0; f -= 0.1f) {
-			Color c = foodPickText.guiText.color;
+			Color c = displayText.guiText.color;
 			c.a = f/5f;
-			foodPickText.guiText.color = c;
+			displayText.guiText.color = c;
 			yield return new WaitForSeconds(.01f);
 		}
-		foodPickText.guiText.enabled = false;
+		displayText.guiText.enabled = false;
 	}
 	void OnControllerColliderHit(ControllerColliderHit hit){
+		string s;
 		if(canEnter && hit.gameObject.tag == "Tree"){
 			print ("Collided with " + hit.gameObject.tag);
 			canEnter = false;
@@ -205,11 +236,24 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		if (hit.gameObject.tag == "foodObject") {
-			audioSource[2].Play();
-			foodPickText.guiText.enabled = true;
-			foodPickText.guiText.text = "Eating " + foodNames[hit.gameObject] + " increased health by 5 points!";
-			StartCoroutine (FoodPickNotificationFade());
+			score += 5;
+			if(score > 30 * highScoreFactor){
+				lives++;
+				livesText.guiText.text = lives.ToString ();
+				highScoreFactor++;
+				s = "You gained an Extra Life!";
+				audioSource[3].Play ();
+			}
+			else{
+				s = "+5 points,\n+5 Health,\nfor grabbing " + foodNames[hit.gameObject]+"!";
+				audioSource[2].Play ();
+			}
+			scoreText.guiText.text = score.ToString();
+			displayText.guiText.enabled = true;
+			displayText.guiText.text = s;
+			StartCoroutine (displayNotificationFade());
 			foodObjectHitCount++;
+
 			if(foodObjects.ContainsKey(hit.gameObject)){
 				foodObjects.Remove(hit.gameObject);
 				foodNames.Remove (hit.gameObject);
