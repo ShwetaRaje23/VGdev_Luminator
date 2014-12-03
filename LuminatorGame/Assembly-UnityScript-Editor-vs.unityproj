@@ -49,6 +49,8 @@
      <Compile Include="Assets\Editor\RaiseHeightmap.js" />
      <None Include="Assets\Cartoony Weapon Pack\Readme.txt" />
      <None Include="Assets\Cartoony Weapon Pack\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
+     <None Include="Assets\76077_rigged_car_zip\license.txt" />
+     <None Include="Assets\76077_rigged_car_zip\readme.txt" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
      <None Include="Assets\56683_car2451\BLENDSWAP_LICENSE.txt" />
      <None Include="Assets\Cartoony Weapon Pack\Standard Assets\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />

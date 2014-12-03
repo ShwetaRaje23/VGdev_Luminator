@@ -6,7 +6,7 @@
 var canControl : boolean = true;
 
 var useFixedUpdate : boolean = true;
-
+public var nettexture : GUITexture;
 private static var instance1 :CharacterMotor;
 
 // For the next variables, @System.NonSerialized tells Unity to not serialize the variable or show it in the inspector view.
@@ -238,6 +238,7 @@ public var swordText:GUIText;
 function Awake () {
 TrapName = "";
 swordText.enabled = false;
+nettexture.enabled = false;
 	controller = GetComponent (CharacterController);
 	anim = GameObject.Find("ForBumpyanimation").GetComponent(Animator);
 	audio1 = GetComponent(AudioSource);
@@ -448,6 +449,9 @@ else //move is false
 
 if(netTrap) //animation on net trap
 {
+
+nettexture.enabled = true;
+  
 swordText.enabled = true;
 StartCoroutine("FadeInstructions");
 netRotateH= Input.GetAxis ("Horizontal");
@@ -480,8 +484,8 @@ transform.Rotate(netRotateV*rotateSpeed, netRotateH * rotateSpeed, 0f);
 			{netFlag2 = !netFlag2;netTranslate.z-=2.05f;}
 	transform.position=new Vector3(transform.position.x,netTranslate.y,netTranslate.z-(2-zoffset));						
 	}
-	//if(sword)
-//	{
+	if(sword)
+	{
 	if (Input.GetKeyDown (KeyCode.Z))
 				{if(!audio1.isPlaying)
 				{audio1.audio.clip = Resources.Load("swoosh-1") as AudioClip;
@@ -490,13 +494,14 @@ transform.Rotate(netRotateV*rotateSpeed, netRotateH * rotateSpeed, 0f);
 		if (swordHitCount > 10)
 						{audio1.Pause();
 						netTrap=false;
+						instance1.nettexture.enabled = false;
 						move=true;swordHitCount = 0;
 						//Debug.Log(TrapName.Substring(TrapName.Length-1,1));
 						transform.rotation = Quaternion.Euler(0f,0f,0f);
 						transform.position=GameObject.Find(TrapName.Substring(TrapName.Length-1,1)).transform.position;
 						swordText.enabled = false;
 						}
-	//}
+	}
 	
 }
 
