@@ -9,7 +9,7 @@ public class LifeMeterScript : MonoBehaviour {
 
 	public int maxLife = 100;
 	public float currLife = 100f;
-
+	public static int numLives;
 	private int numFoodItemsPicked;
 	private bool gameOver = false;
 	//public AudioClip timer;

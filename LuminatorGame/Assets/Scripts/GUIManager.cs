@@ -81,25 +81,22 @@ public class GUIManager : MonoBehaviour {
 	}
 
 	public static void SetGameOver(int health){
-				//Debug.Log ("Its called");
 
 		int finalscore = PlayerControl.score; 
+		int countlives = LifeMeterScript.numLives;
 
-	if (health > 0 && health <= 30 || finalscore < 30) {
-
-			instance.gameOverText.text = "You have won with a health of " + health + "and a score of " +finalscore;
-		instance.finalTexture1.enabled = true;		
-	} else if (health > 30 && health <= 70 || ( finalscore > 30 && finalscore <=50)) {
-		instance.finalTexture2.enabled = true;	
-			instance.gameOverText.text = "You have won with a health of " + health + "and a score of " +finalscore;
-	} else if (health > 90 || finalscore > 50) {
-		instance.finalTexture3.enabled = true;
-		instance.gameOverText.text = "You have won with a health of " + health + "and a score of " +finalscore;
-	} else {
-		instance.gameOverText.text = "You starved to death. Play again ";
-		instance.finalTexture4.enabled = true;
-			}
+		if (countlives == 0 && health < 1) {
+				instance.finalTexture4.enabled = true;
+				instance.gameOverText.text = "You starved to death. Play again!";
+		} else {
+				if (finalscore > 80) {
+					instance.finalTexture3.enabled = true;
+				} else if (finalscore > 50) {
+					instance.finalTexture2.enabled = true;
+				} else {
+					instance.finalTexture1.enabled = true;
+				}
+				instance.gameOverText.text = "You have won with a score of " + finalscore + "!";
+		}
 	}
-
-
 }

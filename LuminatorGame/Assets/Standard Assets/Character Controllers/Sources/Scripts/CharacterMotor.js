@@ -484,8 +484,8 @@ transform.Rotate(netRotateV*rotateSpeed, netRotateH * rotateSpeed, 0f);
 			{netFlag2 = !netFlag2;netTranslate.z-=2.05f;}
 	transform.position=new Vector3(transform.position.x,netTranslate.y,netTranslate.z-(2-zoffset));						
 	}
-	if(sword)
-	{
+	//if(sword)
+	//{
 	if (Input.GetKeyDown (KeyCode.Z))
 				{if(!audio1.isPlaying)
 				{audio1.audio.clip = Resources.Load("swoosh-1") as AudioClip;
@@ -501,7 +501,7 @@ transform.Rotate(netRotateV*rotateSpeed, netRotateH * rotateSpeed, 0f);
 						transform.position=GameObject.Find(TrapName.Substring(TrapName.Length-1,1)).transform.position;
 						swordText.enabled = false;
 						}
-	}
+	//}
 	
 }
 
