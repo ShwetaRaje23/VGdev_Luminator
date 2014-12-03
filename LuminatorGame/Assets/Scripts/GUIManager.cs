@@ -5,7 +5,11 @@ public class GUIManager : MonoBehaviour {
 
 	public GUIText gameOverText;
 	public GUIText useSwordText;
-	
+	public GUITexture finalTexture1;
+	public GUITexture finalTexture2;
+	public GUITexture finalTexture3;
+	public GUITexture finalTexture4;
+
 	// this seems pretty dodgy, although I guess if you know there is just one ... ugh
 	private static GUIManager instance;
 
@@ -16,6 +20,10 @@ public class GUIManager : MonoBehaviour {
 		GameEventManager.GameOver += GameOver;
 		gameOverText.enabled = false;
 		useSwordText.enabled = false;
+		finalTexture1.enabled = false;
+		finalTexture2.enabled = false;
+		finalTexture3.enabled = false;
+		finalTexture4.enabled = false;
 //		instructionsText.fontStyle = FontStyle.Bold;
 //		instructionsText.fontSize = 32;
 //		instructionsText.color = Color.white;
@@ -71,12 +79,20 @@ public class GUIManager : MonoBehaviour {
 	}
 
 	public static void SetGameOver(int health){
-		//Debug.Log ("Its called");
-		if(health > 1)
-		instance.gameOverText.text = "You have won with a health of "+health;
-		else
-		instance.gameOverText.text = "You starved to death. Play again ";
-	
+				//Debug.Log ("Its called");
+				if (health > 50 && health <= 70) {
+						instance.gameOverText.text = "You have won with a health of " + health;
+						instance.finalTexture1.enabled = true;		
+				} else if (health > 70 && health <= 90) {
+						instance.finalTexture2.enabled = true;	
+			instance.gameOverText.text = "You have won with a health of " + health;
+				} else if (health > 90) {
+						instance.finalTexture3.enabled = true;
+			instance.gameOverText.text = "You have won with a health of " + health;
+				} else {
+						instance.gameOverText.text = "You starved to death. Play again ";
+			instance.finalTexture4.enabled = true;
+				}
 	}
 
 

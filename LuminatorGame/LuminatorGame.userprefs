@@ -1,10 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerControl.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GUIManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerControl.cs" Line="201" Column="21" />
-      <File FileName="../../../physics-2d/physics-2d-platformer-example/Assets/Scripts/GUIManager.cs" Line="27" Column="34" />
-      <File FileName="Assets/Scripts/LifeMeterScript.cs" Line="73" Column="3" />
+      <File FileName="Assets\Scripts\PlayerControl.cs" Line="339" Column="1" />
+      <File FileName="Assets\Scripts\LifeMeterScript.cs" Line="141" Column="1" />
+      <File FileName="Assets\Standard Assets\Character Controllers\Sources\Scripts\CharacterMotor.js" Line="871" Column="32" />
+      <File FileName="Assets\Scripts\GUIManager.cs" Line="88" Column="75" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

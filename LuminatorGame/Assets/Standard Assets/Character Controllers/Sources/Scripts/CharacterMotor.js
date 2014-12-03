@@ -7,6 +7,8 @@ var canControl : boolean = true;
 
 var useFixedUpdate : boolean = true;
 
+private static var instance1 :CharacterMotor;
+
 // For the next variables, @System.NonSerialized tells Unity to not serialize the variable or show it in the inspector view.
 // Very handy for organization!
 
@@ -244,6 +246,7 @@ swordText.enabled = false;
 	sinkTranslate = new Vector3(0f,38f,0f);
 	netRotation = new Vector3(0f,0f,0f);
 	netTranslate = new Vector3(0f,37.5f,0f);
+instance1 = this;
 }
 
 
@@ -477,8 +480,8 @@ transform.Rotate(netRotateV*rotateSpeed, netRotateH * rotateSpeed, 0f);
 			{netFlag2 = !netFlag2;netTranslate.z-=2.05f;}
 	transform.position=new Vector3(transform.position.x,netTranslate.y,netTranslate.z-(2-zoffset));						
 	}
-	if(sword)
-	{
+	//if(sword)
+//	{
 	if (Input.GetKeyDown (KeyCode.Z))
 				{if(!audio1.isPlaying)
 				{audio1.audio.clip = Resources.Load("swoosh-1") as AudioClip;
@@ -493,7 +496,7 @@ transform.Rotate(netRotateV*rotateSpeed, netRotateH * rotateSpeed, 0f);
 						transform.position=GameObject.Find(TrapName.Substring(TrapName.Length-1,1)).transform.position;
 						swordText.enabled = false;
 						}
-	}
+	//}
 	
 }
 
@@ -863,6 +866,10 @@ function FadeInstructions() {
 			yield WaitForSeconds(.01f);
 		}
 		swordText.enabled = false;
+	}
+
+	public static function SetMove( moveV:boolean){
+		instance1.move = moveV;
 	}
 	
 

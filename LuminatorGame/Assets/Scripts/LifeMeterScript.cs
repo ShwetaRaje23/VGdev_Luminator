@@ -24,6 +24,7 @@ public class LifeMeterScript : MonoBehaviour {
 
 	void GameOver()
 	{
+		CharacterMotor.SetMove (false);
 		gameOver = true;
 	}
 
