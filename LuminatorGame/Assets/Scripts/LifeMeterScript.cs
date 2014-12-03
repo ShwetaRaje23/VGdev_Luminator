@@ -4,6 +4,7 @@ using System.Collections;
 public class LifeMeterScript : MonoBehaviour {
 
 	private static LifeMeterScript instance;
+	public AudioClip gameoverclip;
 	GUIStyle currentStyle = null;
 
 	public int maxLife = 100;
@@ -63,6 +64,7 @@ public class LifeMeterScript : MonoBehaviour {
 			if(numLives == 0){
 				//Stop Game !
 				GUIManager.SetGameOver(LifeMeterScript.GetHealth());
+				audio.PlayOneShot (gameoverclip);
 				GameEventManager.TriggerGameOver();
 			}
 			else{

@@ -10,8 +10,10 @@ public class GUIManager : MonoBehaviour {
 	public GUITexture finalTexture3;
 	public GUITexture finalTexture4;
 
+
 	// this seems pretty dodgy, although I guess if you know there is just one ... ugh
 	private static GUIManager instance;
+
 
 	void Start () {
 		// perhaps should check here to make sure only one?
@@ -80,19 +82,23 @@ public class GUIManager : MonoBehaviour {
 
 	public static void SetGameOver(int health){
 				//Debug.Log ("Its called");
-				if (health > 50 && health <= 70) {
-						instance.gameOverText.text = "You have won with a health of " + health;
-						instance.finalTexture1.enabled = true;		
-				} else if (health > 70 && health <= 90) {
-						instance.finalTexture2.enabled = true;	
-			instance.gameOverText.text = "You have won with a health of " + health;
-				} else if (health > 90) {
-						instance.finalTexture3.enabled = true;
-			instance.gameOverText.text = "You have won with a health of " + health;
-				} else {
-						instance.gameOverText.text = "You starved to death. Play again ";
-			instance.finalTexture4.enabled = true;
-				}
+
+		int finalscore = PlayerControl.score; 
+
+	if (health > 0 && health <= 30 || finalscore < 30) {
+
+			instance.gameOverText.text = "You have won with a health of " + health + "and a score of " +finalscore;
+		instance.finalTexture1.enabled = true;		
+	} else if (health > 30 && health <= 70 || ( finalscore > 30 && finalscore <=50)) {
+		instance.finalTexture2.enabled = true;	
+			instance.gameOverText.text = "You have won with a health of " + health + "and a score of " +finalscore;
+	} else if (health > 90 || finalscore > 50) {
+		instance.finalTexture3.enabled = true;
+		instance.gameOverText.text = "You have won with a health of " + health + "and a score of " +finalscore;
+	} else {
+		instance.gameOverText.text = "You starved to death. Play again ";
+		instance.finalTexture4.enabled = true;
+			}
 	}
 
 

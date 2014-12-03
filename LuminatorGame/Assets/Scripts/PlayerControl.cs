@@ -11,6 +11,7 @@ public class PlayerControl : MonoBehaviour {
 	public GameObject foodPrefab5;
 	public Camera cam1, cam2;
 	Vector3 camRotation;
+	public AudioClip gameoverclip;
 	
 	Dictionary<GameObject, bool>foodObjects;
 	Dictionary<GameObject, int>treeFoodItemsDone;
@@ -29,9 +30,11 @@ public class PlayerControl : MonoBehaviour {
 	private Animator anim;
 	private int s_count;
 	AudioSource[] audioSource;
-	int score;
+	public static int score;
 	int lives;
 	int highScoreFactor;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -269,6 +272,7 @@ public class PlayerControl : MonoBehaviour {
 		if (other.name == "ExitZone") {
 			GUIManager.SetGameOver(LifeMeterScript.GetHealth());
 
+			audio.PlayOneShot (gameoverclip);
 			GameEventManager.TriggerGameOver();
 		}
 		
