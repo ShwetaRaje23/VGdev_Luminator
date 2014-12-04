@@ -1,11 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GUIManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerControl.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerControl.cs" Line="6" Column="15" />
-      <File FileName="Assets/Scripts/LifeMeterScript.cs" Line="118" Column="3" />
-      <File FileName="Assets/Standard Assets/Character Controllers/Sources/Scripts/CharacterMotor.js" Line="441" Column="11" />
-      <File FileName="Assets/Scripts/GUIManager.cs" Line="88" Column="14" />
+      <File FileName="Assets/Scripts/PlayerControl.cs" Line="273" Column="26" />
+      <File FileName="Assets/Scripts/LifeMeterScript.cs" Line="67" Column="36" />
+      <File FileName="Assets/Standard Assets/Character Controllers/Sources/Scripts/CharacterMotor.js" Line="451" Column="1" />
+      <File FileName="Assets/Scripts/GUIManager.cs" Line="99" Column="84" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

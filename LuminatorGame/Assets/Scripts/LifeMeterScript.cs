@@ -51,7 +51,7 @@ public class LifeMeterScript : MonoBehaviour {
 		}
 
 		if (ToggleLight.lightOn == true) {
-			currLife -= Time.deltaTime;
+			currLife -= Time.deltaTime * 3;
 		}
 		
 		else if (ToggleLight.lightOn == false)
